@@ -16,7 +16,7 @@ test("Page fixture Playwright test", async ({ page }) => {
   await expect(page).toHaveTitle("Google"); // Ensures the page has the given title.
 });
 
-test.only("Playwright test on a Login page", async ({ page }) => {
+test("Playwright test on a Login page", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 
   const signIn = page.locator("#signInBtn");
