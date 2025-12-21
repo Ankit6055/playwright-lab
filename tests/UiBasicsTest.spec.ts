@@ -53,7 +53,7 @@ test("Playwright test on a Login page", async ({ page }) => {
 test("Sign In Test", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/client/#/auth/login");
 
-  await page.locator("#userEmail").fill(`${process.env.USER_EMAIL}`);
-  await page.locator("#userPassword").fill(`${process.env.USER_PASSWORD}`);
+  await page.locator("#userEmail").fill(`${process.env.USER_EMAIL!}`);
+  await page.locator("#userPassword").fill(`${process.env.USER_PASSWORD!}`);
   await page.locator("#login").click();
 });
