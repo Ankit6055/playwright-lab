@@ -16,13 +16,31 @@ test("Page fixture Playwright test", async ({ page }) => {
   await expect(page).toHaveTitle("Google"); // Ensures the page has the given title.
 });
 
-test("Playwright test on a Login page", async ({ page }) => {
+test.only("Playwright test on a Login page", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 
-  page.locator("#username").fill("rahulshettyacademy");
-  page.locator("[type='password']").fill("learning");
-  await page.locator("#signInBtn").click();
+  const signIn = await page.locator("#signInBtn");
+
+  const userName = page.locator("#username");
+  await userName.fill("rahulshetty");
+
+  const userPassword = page.locator("[type='password']");
+  await userPassword.fill("learning");
+
+  await signIn.click();
   console.log(await page.locator("[style*='block']").textContent()); // prints the text content in the pop-up
 
-  await expect(page.locator("[style*='block']")).toContainText("Empty username/password.")
+  await expect(page.locator("[style*='block']")).toContainText("Incorrect")
+
+  await userName.fill(""); // clears out the text
+  await userName.fill("rahulshettyacademy");
+  userPassword.fill("learning")
+  signIn.click();
+
+  console.log(await page.locator(".card-body a").nth(0).textContent());
+  console.log(await page.locator(".card-body a").nth(1).textContent());
+  console.log(await page.locator(".card-body a").nth(2).textContent());
+  console.log(await page.locator(".card-body a").nth(3).textContent());
+  console.log(await page.locator(".card-body a").nth(-1).textContent()); // returns the last element
+//   console.log(await page.locator(".card-body a").first().textContent()); // same as nth(0)
 });
