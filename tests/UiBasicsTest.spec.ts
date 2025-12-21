@@ -19,7 +19,7 @@ test("Page fixture Playwright test", async ({ page }) => {
 test.only("Playwright test on a Login page", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 
-  const signIn = await page.locator("#signInBtn");
+  const signIn = page.locator("#signInBtn");
 
   const userName = page.locator("#username");
   await userName.fill("rahulshetty");
