@@ -92,3 +92,32 @@ test("UI Control", async ({ page }) => {
 
   await expect(documentLink).toHaveAttribute("class", "blinkingText");
 });
+
+test("Child Windows Handling", async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+
+  const documentLink = page.locator("[href*='documents-request']");
+
+  const [newPage] = await Promise.all([
+    context.waitForEvent("page"), // listen for any new page to open
+    documentLink.click(), // new page is opened
+  ]);
+
+  const text = await newPage.locator(".red").textContent();
+  const emailMatch = text
+    ? text.match(/[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/)
+    : null;
+
+  let domain: string | null = emailMatch ? emailMatch[1] : null;
+  console.log(domain);
+
+  if (domain === null) {
+    domain = "test.com";
+  }
+
+  await page.locator("#username").fill(domain);
+  console.log(await page.locator("#username").textContent());
+});
