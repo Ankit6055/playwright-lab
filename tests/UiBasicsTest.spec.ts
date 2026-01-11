@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { title } from "node:process";
 
 test.skip("Browser context playwright test", async ({ browser }) => {
   const context = browser.newContext(); // Creates a new browser context. It won't share cookies/cache with other browser contexts.
@@ -59,4 +60,9 @@ test("Sign In Test", async ({ page }) => {
   console.log(`${process.env.USER_PASSWORD!}`);
   await page.locator("#userPassword").fill(`${process.env.USER_PASSWORD!}`);
   await page.locator("#login").click();
+
+  await  page.locator(".card-body b").first().waitFor();
+
+  const titles = await page.locator(".card-body b").allTextContents();
+  console.log(titles);
 });
