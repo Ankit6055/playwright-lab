@@ -119,5 +119,5 @@ test("Child Windows Handling", async ({ browser }) => {
   }
 
   await page.locator("#username").fill(domain);
-  console.log(await page.locator("#username").textContent());
-});
+  console.log(await page.locator("#username").inputValue()); // gets the current value of an input field (like a text box) on the page.
+}); 
