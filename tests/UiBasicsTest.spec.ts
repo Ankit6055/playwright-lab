@@ -61,8 +61,31 @@ test("Sign In Test", async ({ page }) => {
   await page.locator("#userPassword").fill(`${process.env.USER_PASSWORD!}`);
   await page.locator("#login").click();
 
-  await  page.locator(".card-body b").first().waitFor();
+  await page.locator(".card-body b").first().waitFor();
 
   const titles = await page.locator(".card-body b").allTextContents();
   console.log(titles);
+});
+
+test("UI Control", async ({ page }) => {
+  await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+  const userName = page.locator("#username");
+  const signIn = page.locator("#signInBtn");
+  const documentLink = page.locator("[href*='documents-request']");
+
+  const dropDown = page.locator("select.form-control");
+  await dropDown.selectOption("consult");
+
+  await page.locator(".radiotextsty").nth(1).click();
+  await page.locator("#okayBtn").click();
+  await expect(page.locator(".radiotextsty").nth(1)).toBeChecked();
+  console.log(await page.locator(".radiotextsty").nth(1).isChecked());
+
+  await page.locator("#terms").click();
+  await expect(page.locator("#terms")).toBeChecked();
+
+  await page.locator("#terms").uncheck(); // for uncheck there is no assertion
+  expect(await page.locator("#terms").isChecked()).toBeFalsy();
+
+  await expect(documentLink).toHaveAttribute("class", "blinkingText");
 });
