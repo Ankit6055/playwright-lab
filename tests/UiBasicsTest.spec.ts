@@ -61,6 +61,8 @@ test("Sign In Test", async ({ page }) => {
   await page.locator("#userPassword").fill(`${process.env.USER_PASSWORD!}`);
   await page.locator("#login").click();
 
+  await page.waitForTimeout(5000);
+
   await page.locator(".card-body b").first().waitFor();
 
   const titles = await page.locator(".card-body b").allTextContents();
